@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans     
         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc  
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-        ">
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	<!-- 隐式地向 Spring容器注册 -->
-	<context:annotation-config/>
+	<context:annotation-config />
+	<mvc:annotation-driven />
+	<aop:aspectj-autoproxy />
+	
+	<!-- 自动扫描所有注解该路径 -->
+	<context:component-scan base-package="com.web" />
 	
 	<!-- Hibernate4 -->
 	<!-- 加载资源文件 其中包含变量信息，必须在Spring配置文件的最前面加载，即第一个加载 -->
@@ -48,12 +56,7 @@
 			</props>
 		</property>
 		 -->
-		 <!-- 
-		<property name="packagesToScan">
-			<list>
-				<value>com.web.entity</value>
-			</list>
-		</property>
+		<!-- 
 		 <property name="mappingResources">
 		 	<list>
 		 		<value>com/web/entity/user.hbm.xml</value>
@@ -61,6 +64,12 @@
 		 </property>
 		<property name="configLocation" value="classpath:hibernate.cfg.xml" />  
 		 -->
+		<!-- 扫描实体类 -->
+		<property name="packagesToScan">
+			<list>
+				<value>com.web.entity</value>
+			</list>
+		</property>
 	</bean>
 
 	<!-- 配置Hibernate事务管理器 -->
@@ -74,9 +83,7 @@
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 		
 	<!-- 注解方式配置事物 -->
-  	<!-- 
   	<tx:annotation-driven transaction-manager="transactionManager" />
-  	 -->
 
 	<!-- 声明式容器事务管理 ,transaction-manager指定事务管理器为transactionManager -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">

@@ -41,10 +41,11 @@
 			<version>1.0.1.Final</version>
 		</dependency>
 		<!-- 开源的分析，编辑和创建Java代码的类库，方便Hibernate使用代理模式 -->
+		<!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
 		<dependency>
-			<groupId>org.javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>3.18.1-GA</version>
+		    <groupId>org.javassist</groupId>
+		    <artifactId>javassist</artifactId>
+		    <version>3.20.0-GA</version>
 		</dependency>
 		<!-- Java中的事务处理API -->
 		<dependency>
@@ -237,21 +238,38 @@
 		</dependency>
 
 		<!-- 日志组件 -->
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+		    <groupId>log4j</groupId>
+		    <artifactId>log4j</artifactId>
+		    <version>1.2.17</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-nop</artifactId>
-			<version>1.6.6</version>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.7.21</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>log4j-over-slf4j</artifactId>
-			<version>1.6.6</version>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-log4j12</artifactId>
+		    <version>1.7.21</version>
 		</dependency>
+		<!-- 
+		https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-nop</artifactId>
+		    <version>1.7.21</version>
+		</dependency>
+		https://mvnrepository.com/artifact/org.slf4j/log4j-over-slf4j
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>log4j-over-slf4j</artifactId>
+		    <version>1.7.21</version>
+		</dependency>
+		 -->
 
 		<!-- 通用编码解码包 -->
 		<dependency>

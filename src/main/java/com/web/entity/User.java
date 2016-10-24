@@ -7,8 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name="user")
+@Entity
+@Table(name="user")
 public class User {
     private Integer id;
 	
@@ -26,9 +26,9 @@ public class User {
 		this.pswd = pswd;
 	}
 
-//	@Id
-//	@GeneratedValue(strategy=GenerationType.AUTO)
-//	@Column(name="id")
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id")
 	public Integer getId() {
 		return id;
 	}
@@ -37,7 +37,7 @@ public class User {
 		this.id = id;
 	}
 
-//	@Column(name="name",length=18)
+	@Column(name="name", length=18)
 	public String getName() {
 		return name;
 	}
@@ -46,7 +46,7 @@ public class User {
 		this.name = name;
 	}
 
-//	@Column(name="pswd",length=32)
+	@Column(name="pswd", length=32)
 	public String getPswd() {
 		return pswd;
 	}

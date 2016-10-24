@@ -11,12 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.web.service.UserService;
 
-/** 
- * Function:  
- * @author jiangyf   
- * @since 2016年8月24日 下午3:32:07 
- * @version V1.0   
- */
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -26,8 +20,9 @@ public class UserController {
 	@RequestMapping(value = "/sayHello", method = RequestMethod.GET)
 	public ModelAndView sayHello(HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
-		model.setViewName("index");
-		model.addObject("sayHello", userService.sayHello(request.getParameter("name")));
+		model.setViewName("/index");
+//		model.addObject("sayHello", userService.sayHello(request.getParameter("name")));
+		model.addObject("sayHello", userService.getUser(1).getName());
 		return model;
 	}
 	
