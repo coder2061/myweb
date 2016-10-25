@@ -13,7 +13,10 @@
 	 -->
 	 
 	<!-- web.xml 的加载顺序是：ServletContext -> context-param -> listener -> filter -> servlet -->
-
+	<context-param>
+	    <param-name>webAppRootKey</param-name>
+	    <param-value>webApp.root</param-value>
+  	</context-param>
 	<!-- 日志记录 -->
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
@@ -29,11 +32,11 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:spring-context.xml,
-			classpath:spring-hibernate.xml
+			classpath:spring-hibernate.xml,
+	        classpath:tools/spring-quartz.xml
 			<!-- 
 			classpath:tools/spring-redis.xml,
 			classpath:tools/spring-shiro.xml,
-	        classpath:tools/spring-quartz.xml
 	         -->
         </param-value>
 	</context-param>
