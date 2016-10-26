@@ -13,7 +13,7 @@ import com.web.utils.DateUtils;
  * @date 2016年8月10日 下午6:28:50 
  * @version V1.0   
  */
-@Component
+@Component("myScheduler")
 public class AnnotationSchedule {
 	/*（1）实现类上要有组件的注解@Component；
 	 *（2）定时器的任务方法不能有返回值；若有返回值，spring初始化时报错，需要设定一个proxytargetclass的某个值为true

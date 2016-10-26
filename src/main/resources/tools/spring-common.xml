@@ -24,25 +24,35 @@
     
 	<!-- 隐式地向 Spring容器注册 -->
 	<context:annotation-config/>
+	
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>  
     
+    
     <!-- 统一异常处理方式 -->
-    <!-- 
 	<bean id="exceptionHandler" class="com.web.myapp.core.exception.MyExceptionHandler"/>
-	 -->
+	
 	
 	<!-- 引入资源配置文件 -->
+	<context:property-placeholder location="classpath:common.properties" />
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+        <property name="location" value="classpath:common.properties" />  
+    </bean>
+	
 	<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
             <list>
-                <value>classpath:config/common.properties</value>
+                <value>classpath*:common.properties</value>
             </list>
         </property>
     </bean>
-	 
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="false" />
+        <property name="properties" ref="configProperties" />
+    </bean>
+	
+	
 	<!-- 自动扫描该包，注入业务接口层,逻辑业务层 -->
-	<!-- 
     <context:component-scan base-package="com.web" />
-	 -->
 
 </beans>

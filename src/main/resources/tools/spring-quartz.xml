@@ -14,7 +14,20 @@
 		http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 		
 	<!-- 隐式地向 Spring容器注册 -->
-	<task:annotation-driven/> 
+	<task:annotation-driven/>
+	
+	<!-- 理论上，开启这个配置，spring才能识别@Scheduled注解 ，实际只需以上配置就行 -->
+	<!-- 
+    <task:scheduler id="myScheduler" pool-size="10"/>
+	<task:annotation-driven scheduler="myScheduler" mode="proxy"/>  
+	 -->
+	 
+	<!-- 
+	<context:component-scan base-package="com.web.tools.quartz" /> 
+	<task:scheduled-tasks>   
+        <task:scheduled ref="mySchedule" method="test" cron="0/5 * * * * ?"/>   
+	</task:scheduled-tasks>
+	 -->
     
     <!-- 线程执行器配置，用于任务注册 -->
 	<bean id="executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
@@ -40,16 +53,23 @@
         <!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->  
         <property name="concurrent" value="true" />
         <!-- shouldRecover属性为true，则当Quartz服务被中止后，再次启动任务时会尝试恢复执行之前未完成的所有任务  -->
-		<!-- 
-		<property name="shouldRecover" value="true" /> 
-        <property name="durability" value="true"/>
-		-->
+		<!-- <property name="shouldRecover" value="true" /> -->
+        <!-- <property name="durability" value="true"/> -->
     </bean>
     <bean id="myScheduleDetail2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
         <property name="targetObject" ref="mySchedule" />
         <property name="targetMethod" value="testSimple" />
         <property name="concurrent" value="true" />
     </bean>
+    <bean name="myScheduleDetail3" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  
+		<property name="jobClass" value="com.web.tools.quartz.MyQuartzJobBean" />
+		<property name="durability" value="true"/>  
+		<property name="jobDataAsMap">  
+			<map>  
+				<entry key="timeout" value="10" />
+			</map>  
+		</property>  
+	</bean>
   
     <!--配置调度执行的触发的时间-->  
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
@@ -66,28 +86,56 @@
 		<!-- 间隔时间内重复调度次数：每10秒重复调度2次 -->  
         <property name="repeatCount" value="2" />
     </bean>
+    <bean id="cronTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="myScheduleDetail3" />  
+        <property name="cronExpression" value="0/10 * * * * ?" />
+    </bean>
+    
+    <!-- 自定义调度工厂 -->
+    <bean id="jobFactory" class="com.web.tools.quartz.MyJobFactory" />
+    
+    <bean id="jobService" class="com.web.service.impl.SchedulerServiceImpl" />
   
-    <!-- quartz的调度工厂 调度工厂只能有一个，多个调度任务在list中添加lazy-init='false'表容器启动就会执行调度程序  -->  
-    <bean id="startQuartz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+    <!-- quartz的调度工厂，调度工厂只能有一个，多个调度任务在list中添加lazy-init='false'表容器启动就会执行调度程序  -->  
+    <bean id="scheduler" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    	<property name="jobFactory" ref="jobFactory" />
+    	<!-- SchedulerFactoryBean在初始化后，是否马上启动Scheduler，默认为true。如果设置为false，需要手工启动Scheduler -->
         <property name="autoStartup" value="true" />
-        <!--可选，QuartzScheduler启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 -->
+        <!-- 在SchedulerFactoryBean初始化后，延迟多少秒启动Scheduler，默认为0，表示马上启动；延迟启动，Spring能够更快初始化容器中剩余的Bean -->    
+        <property name="startupDelay" value="30" />
+        <!-- Scheduler启动时是否更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 -->
 		<property name="overwriteExistingJobs" value="true"/>
-		<!-- 
-        <property name="dataSource" ref="dataSource" />
-         -->
-        <!--applicationContextSchedulerContextKey： 
-         	是org.springframework.scheduling.quartz.SchedulerFactoryBean
-         	这个类中把spring上下文以key/value的方式存放在了quartz的上下文中了，可以用其所定义的key得到对应的spring上下文-->
+		<!-- 持久化任务调度数据，你可以在Quartz中配置数据源，dataSource会覆盖quartz.properties中定义的数据源 -->
+        <!-- <property name="dataSource" ref="dataSource" /> -->
+        <!-- Spring强烈推荐事务管理器，否则数据表锁定可能不能正常工作；  -->
+        <!-- <property name="transactionManager" ref="txManager" /> -->
+        <!-- 在全局事务的情况下，如果你不希望Scheduler执行化数据操作参与到全局事务中，则可以通过该属性指定数据源。在Spring本地事务的情况下，使用dataSource属性就足够了； -->
+        <!-- <property name="nonTransactionalDataSource" ref="nonTransactionalDataSource" /> -->
+        <!-- SchedulerFactoryBean 类把spring上下文以key/value的方式存放在了quartz的上下文中了，可以用其所定义的key得到对应的spring上下文-->
         <property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>
+        <!-- 在Spring中定义Quartz的属性 -->
         <property name="configLocation" value="classpath:config/quartz.properties"/>
+        <!-- 线程执行器配置，用于任务注册 -->
+        <property name="taskExecutor" ref="executor" />
+        <!-- 类型为JobDetail[]，通过该属性向Scheduler注册多个JobDetail； -->
+		<!-- <property name="jobDetails"><list></list></property> -->
+        <!-- 类型为Trigger[]，通过该属性向Scheduler注册多个Trigger -->
         <property name="triggers">  
-            <!-- 所有的调度列表-->  
+            <!-- 作业调度列表-->  
             <list>
             	<!-- 
                 <ref local="cronTrigger" />
                 <ref local="simpleTrigger" />
+                <ref local="cronTrigger2" />
                  -->
             </list>
+        </property>
+        <!-- spring管理的service需要放到这里，才能够注入成功 -->
+        <property name="schedulerContextAsMap">    
+            <map>    
+                <description>schedulerContextAsMap</description>    
+                <entry key="jobService" value-ref="jobService"/>  
+            </map>    
         </property>
     </bean>  
   
