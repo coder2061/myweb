@@ -1,4 +1,4 @@
-package com.web.tools.quartz;
+package com.web.tools.quartz.core;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,7 @@ public class MyJobFactory extends AdaptableJobFactory {
 	* 重写createJobInstance方法，用于Job实例化
 	* 
 	* @param bundle
-	* @return
 	* @throws Exception
-	* @return  
-	* @throws
 	*/
 	protected Object createJobInstance(TriggerFiredBundle bundle)
 			throws Exception {

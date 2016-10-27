@@ -1,16 +1,17 @@
-package com.web.tools.quartz;
+package com.web.tools.quartz.jobs;
+
+import java.util.Date;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerContext;
 import org.quartz.SchedulerException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import com.web.service.SchedulerService;
+import com.web.utils.DateUtils;
 
 /**
  * spring定义quartz job需要继承类QuartzJobBean
@@ -18,7 +19,6 @@ import com.web.service.SchedulerService;
  * @author jiangyf
  */
 public class MyQuartzJobBean extends QuartzJobBean {
-	private static Logger log = LoggerFactory.getLogger(MyQuartzJobBean.class);
 	private SchedulerService jobService;
 
 	// 调度工厂实例化后，经过timeout时间开始执行调度
@@ -42,9 +42,12 @@ public class MyQuartzJobBean extends QuartzJobBean {
 					.get("applicationContextSchedulerContextKey");
 			// 获取JobExecutionContext中的service对象
 			jobService = (SchedulerService) appCtx.getBean("jobService");
-			log.info(jobService.sayHello("jade"));
+			System.out.println(jobService.sayHello("jade"));
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
+		System.out.println("定时任务：QuartzJobBean类继承，时间："
+				+ DateUtils.getDateStrByPattern(new Date(),
+						"yyyy-MM-dd HH:mm:ss"));
 	}
 }

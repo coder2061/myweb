@@ -1,4 +1,4 @@
-package com.web.tools.quartz;
+package com.web.tools.quartz.core;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,12 +14,12 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.web.tools.quartz.jobs.MyJob;
+
 /**
  * quartz作业调度接口实现
  * 
  * @author jiangyf
- * @since 2016年8月30日 上午11:51:56
- * @version V1.0
  */
 public class MyJobSchedule {
 	private static final Logger logger = LoggerFactory
@@ -29,8 +29,6 @@ public class MyJobSchedule {
 	 * 执行quartz作业调度
 	 * 
 	 * @return void
-	 * @author jiangyf
-	 * @since 2016年8月30日 下午12:02:36
 	 */
 	private static void runCronSchedule() {
 		try {
@@ -65,8 +63,6 @@ public class MyJobSchedule {
 	 * 执行quartz作业调度
 	 * 
 	 * @return void
-	 * @author jiangyf
-	 * @since 2016年8月30日 下午12:02:36
 	 */
 	private static void runSimpleSchedule() {
 		try {

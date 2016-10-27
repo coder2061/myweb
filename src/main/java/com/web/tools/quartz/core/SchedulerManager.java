@@ -1,4 +1,4 @@
-package com.web.tools.quartz;
+package com.web.tools.quartz.core;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +13,6 @@ import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SchedulerFactory;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
@@ -23,14 +22,12 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
 
 /**
- * quartz任务管理器
+ * Scheduler管理器
  * 
  * @author jiangyf
- * @since 2016年10月26日 上午10:07:42
- * @version V1.0
  */
-public class QuartzScheduleManager {
-	private static Scheduler scheduler = getScheduler();
+public class SchedulerManager {
+	private static Scheduler scheduler;
 	private static JobDetail jobDetail;
 	private static Trigger trigger;
 
@@ -41,9 +38,8 @@ public class QuartzScheduleManager {
 	 * @throws SchedulerException
 	 */
 	private static Scheduler getScheduler() {
-		SchedulerFactory sf = new StdSchedulerFactory();
 		try {
-			scheduler = sf.getScheduler();
+			scheduler = new StdSchedulerFactory().getScheduler();
 			// scheduler = StdSchedulerFactory.getDefaultScheduler();
 		} catch (SchedulerException e) {
 			e.printStackTrace();
@@ -52,6 +48,9 @@ public class QuartzScheduleManager {
 	}
 
 	public static Scheduler getInstanceScheduler() {
+		if (scheduler == null) {
+			return getScheduler();
+		}
 		return scheduler;
 	}
 
@@ -170,6 +169,27 @@ public class QuartzScheduleManager {
 	}
 
 	/**
+	 * 获取JobKey
+	 * 
+	 * @param jobName
+	 * @return JobKey
+	 */
+	public static JobKey getJobKey(String jobName) {
+		return JobKey.jobKey(jobName);
+	}
+
+	/**
+	 * 获取JobKey
+	 * 
+	 * @param jobName
+	 * @param jobGroup
+	 * @return JobKey
+	 */
+	public static JobKey getJobKey(String jobName, String jobGroup) {
+		return JobKey.jobKey(jobName, jobGroup);
+	}
+
+	/**
 	 * 删除相关的job任务
 	 * 
 	 * @param jobkey
@@ -193,7 +213,7 @@ public class QuartzScheduleManager {
 	}
 
 	/**
-	 * 为job任务设置触发器
+	 * 为job任务设置触发器，立即运行任务
 	 * 
 	 * @param jobkey
 	 * @throws SchedulerException
@@ -393,4 +413,5 @@ public class QuartzScheduleManager {
 		scheduler.scheduleJob(jobDetail, trigger);
 		return scheduler;
 	}
+
 }

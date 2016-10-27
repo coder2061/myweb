@@ -1,4 +1,4 @@
-package com.web.tools.quartz;
+package com.web.tools.quartz.jobs;
 
 import java.lang.reflect.Method;
 
@@ -24,7 +24,7 @@ public class MyDetailQuartzJobBean extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext context)
 			throws JobExecutionException {
 		try {
-			logger.info("execute [" + targetObject + "] at once>>>>>>");
+			System.out.println("execute [" + targetObject + "] at once>>>>>>");
 			Object otargetObject = ctx.getBean(targetObject);
 			Method m = null;
 
