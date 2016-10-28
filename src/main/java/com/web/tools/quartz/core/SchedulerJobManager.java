@@ -9,11 +9,13 @@ import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
+import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
@@ -30,7 +32,8 @@ import com.web.tools.quartz.jobs.DefaultSyncJob;
  * @author jiangyf
  */
 public class SchedulerJobManager {
-	private static final String DEFAULTJOB = "com.web.tools.quartz.jobs.DefaultJob";
+	private static final String JOBCLASSNAME = "com.web.tools.quartz.jobs.DefaultJob";
+	private static final String JOBDATAMAPKEY = "schedulerJob";
 
 	/**
 	 * 创建定时任务
@@ -56,11 +59,52 @@ public class SchedulerJobManager {
 		// 表达式调度构建器
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder
 				.cronSchedule(cronExpression);
-		// 按新的cronExpression表达式构建一个新的trigger
+		// 构建trigger
 		CronTrigger trigger = TriggerBuilder.newTrigger()
 				.withIdentity(jobName, jobGroup).withSchedule(scheduleBuilder)
 				.build();
 		try {
+			// 交由Scheduler安排触发
+			scheduler.scheduleJob(jobDetail, trigger);
+		} catch (SchedulerException e) {
+			System.out.println("创建定时任务失败" + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 创建定时任务
+	 * 
+	 * @param scheduler
+	 * @param jobName
+	 * @param jobGroup
+	 * @param interval
+	 * @param count
+	 * @param isSync
+	 * @param key
+	 * @param param
+	 */
+	public static void createScheduleJob(Scheduler scheduler, String jobName,
+			String jobGroup, int interval, int count, boolean isSync,
+			String key, Object param) {
+		// 同步或异步
+		Class<? extends Job> jobClass = (Class<? extends Job>) (isSync ? DefaultSyncJob.class
+				: DefaultJob.class);
+		// 构建job信息
+		JobDetail jobDetail = JobBuilder.newJob(jobClass)
+				.withIdentity(jobName, jobGroup).build();
+		// 放入参数，运行时的方法可以获取
+		jobDetail.getJobDataMap().put(key, param);
+		// 设置运行时间点
+		SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder
+				.simpleSchedule().withIntervalInSeconds(interval)
+				.withRepeatCount(count).repeatForever();
+		// 构建trigger
+		SimpleTrigger trigger = TriggerBuilder.newTrigger()
+				.withIdentity(jobName, jobGroup).withSchedule(scheduleBuilder)
+				.build();
+		try {
+			// 交由Scheduler安排触发
 			scheduler.scheduleJob(jobDetail, trigger);
 		} catch (SchedulerException e) {
 			System.out.println("创建定时任务失败" + e.getMessage());
@@ -78,7 +122,7 @@ public class SchedulerJobManager {
 	 */
 	public static Date addJob(Scheduler scheduler, SchedulerJob schedulerJob)
 			throws SchedulerException, ClassNotFoundException {
-		return addJob(scheduler, schedulerJob, SchedulerJobManager.DEFAULTJOB);
+		return addJob(scheduler, schedulerJob, JOBCLASSNAME);
 	}
 
 	/**
@@ -105,7 +149,7 @@ public class SchedulerJobManager {
 					.newJob((Class<? extends Job>) JobClass)
 					.withIdentity(schedulerJob.getJobName(),
 							schedulerJob.getJobGroup()).build();
-			jobDetail.getJobDataMap().put("schedulerJob", schedulerJob);
+			jobDetail.getJobDataMap().put(JOBDATAMAPKEY, schedulerJob);
 			// 表达式调度构建器
 			CronScheduleBuilder scheduleBuilder = CronScheduleBuilder
 					.cronSchedule(schedulerJob.getCronExpression());
@@ -151,6 +195,55 @@ public class SchedulerJobManager {
 				.withSchedule(scheduleBuilder).build();
 		// 按新的trigger重新设置job执行
 		return scheduler.rescheduleJob(triggerKey, trigger);
+	}
+
+	/**
+	 * 更新任务的运行时间使劲设置，更新之后，任务将立即按新的运行时间执行
+	 * 
+	 * @param scheduler
+	 * @param schedulerJob
+	 * @throws SchedulerException
+	 * @return Date
+	 */
+	public static Date modifyRepeatInfo(Scheduler scheduler,
+			SchedulerJob schedulerJob) throws SchedulerException {
+		TriggerKey triggerKey = TriggerKey.triggerKey(
+				schedulerJob.getJobName(), schedulerJob.getJobGroup());
+		// 获取trigger
+		SimpleTrigger trigger = (SimpleTrigger) scheduler
+				.getTrigger(triggerKey);
+		// 设置运行时间点
+		SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder
+				.simpleSchedule()
+				.withIntervalInSeconds(
+						schedulerJob.getRepeatInterval().intValue())
+				.withRepeatCount(schedulerJob.getRepeatCount()).repeatForever();
+		// 重新构建trigger
+		trigger = trigger.getTriggerBuilder().withIdentity(triggerKey)
+				.withSchedule(scheduleBuilder).build();
+
+		// 按新的trigger重新设置job执行
+		return scheduler.rescheduleJob(triggerKey, trigger);
+	}
+
+	/**
+	 * 更新参数，实际测试中发现无法更新，所以可采用先删除任务再进行创建的方式来迂回实现参数的更新
+	 * 
+	 * @param jobDetail
+	 * @param schedulerJob
+	 * @return JobDetail
+	 * @throws SchedulerException
+	 */
+	@SuppressWarnings("unused")
+	private static JobDetail modifyJobDataMap(Scheduler scheduler,
+			SchedulerJob schedulerJob) throws SchedulerException {
+		JobKey jobKey = JobKey.jobKey(schedulerJob.getJobName(),
+				schedulerJob.getJobGroup());
+		JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+		JobDataMap jobDataMap = jobDetail.getJobDataMap();
+		jobDataMap.put(JOBDATAMAPKEY, schedulerJob);
+		jobDetail.getJobBuilder().usingJobData(jobDataMap);
+		return jobDetail;
 	}
 
 	/**
@@ -239,12 +332,14 @@ public class SchedulerJobManager {
 		job.setNextFireTime(trigger.getNextFireTime().getTime());
 		job.setPrevFireTime(trigger.getPreviousFireTime().getTime());
 
-		Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger
-				.getKey());
+		Trigger.TriggerState triggerState = scheduler
+				.getTriggerState(triggerKey);
 		job.setJobStatus(triggerState.name());
 
-		job.setStartTime(trigger.getStartTime().getTime());
-		job.setEndTime(trigger.getEndTime().getTime());
+		job.setStartTime(trigger.getStartTime() != null ? trigger
+				.getStartTime().getTime() : null);
+		job.setEndTime(trigger.getEndTime() != null ? trigger.getEndTime()
+				.getTime() : null);
 
 		return job;
 	}

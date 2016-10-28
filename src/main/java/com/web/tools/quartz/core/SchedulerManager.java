@@ -363,9 +363,12 @@ public class SchedulerManager {
 		return schedBuilder;
 	}
 
-	public static SimpleScheduleBuilder createScheduleBuilder(int interval) {
+	public static SimpleScheduleBuilder createScheduleBuilder(int interval, 
+			int count) {
 		SimpleScheduleBuilder schedBuilder = SimpleScheduleBuilder
-				.simpleSchedule().withIntervalInSeconds(interval)
+				.simpleSchedule()
+				.withIntervalInSeconds(interval)
+				.withRepeatCount(count)
 				.repeatForever();
 		return schedBuilder;
 	}
@@ -400,14 +403,14 @@ public class SchedulerManager {
 	}
 
 	public static Scheduler createScheduler(String jobName, String jobGroup,
-			int interval, String triggerName, String triggerGroup,
+			int interval, int count, String triggerName, String triggerGroup,
 			Class<? extends Job> jobClass) throws SchedulerException {
 		// 启动Scheduler实例
 		start();
 		// 具体任务
 		jobDetail = createJobDetail(jobName, jobGroup, jobClass);
 		// 触发时间点
-		SimpleScheduleBuilder schedBuilder = createScheduleBuilder(interval);
+		SimpleScheduleBuilder schedBuilder = createScheduleBuilder(interval, count);
 		trigger = createTrigger(triggerName, triggerGroup, schedBuilder);
 		// 交由Scheduler安排触发
 		scheduler.scheduleJob(jobDetail, trigger);
