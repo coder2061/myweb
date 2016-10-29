@@ -3,7 +3,7 @@ package com.web.utils;
 import org.hibernate.Session;  
 import org.hibernate.SessionFactory;  
 
-import com.web.core.HibernateSessionFactory;
+import com.web.core.factory.HibernateSessionFactory;
 import com.web.entity.User;
   
   

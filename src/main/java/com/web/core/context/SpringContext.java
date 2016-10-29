@@ -1,4 +1,4 @@
-package com.web.core;
+package com.web.core.context;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -10,16 +10,14 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * Spring上下文操作
  * 
  * @author jiangyf
- * @since 2016年10月26日 下午4:54:07
- * @version V1.0
  */
-public class SpringContextUtil implements ApplicationContextAware {
+public class SpringContext implements ApplicationContextAware {
 	// Spring应用上下文环境
 	private static ApplicationContext applicationContext;
 
 	public void setApplicationContext(ApplicationContext applicationContext)
 			throws BeansException {
-		SpringContextUtil.applicationContext = applicationContext;
+		SpringContext.applicationContext = applicationContext;
 	}
 
 	public static ApplicationContext getApplicationContext() {
@@ -27,7 +25,7 @@ public class SpringContextUtil implements ApplicationContextAware {
 	}
 
 	// 私有化的构造方法，保证外部的类不能通过构造器来实例化。
-	private SpringContextUtil() {
+	private SpringContext() {
 
 	}
 
@@ -120,7 +118,7 @@ public class SpringContextUtil implements ApplicationContextAware {
 
 	public static void main(String[] args) {
 		// 获取spring装配的bean个数
-		String[] beans = SpringContextUtil.getInstance()
+		String[] beans = SpringContext.getInstance()
 				.getBeanDefinitionNames();
 		// 逐个打印出spring自动装配的bean。根据我的测试，类名第一个字母小写即bean的名字
 		for (int i = 0; i < beans.length; i++) {

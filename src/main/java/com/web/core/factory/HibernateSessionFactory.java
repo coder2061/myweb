@@ -1,4 +1,4 @@
-package com.web.core;
+package com.web.core.factory;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

@@ -181,6 +181,11 @@
 	</error-page>
 	<!-- 出现异常 -->
 	<error-page>
+	   	<exception-type>org.springframework.web.multipart.MaxUploadSizeExceededException</exception-type>
+	    <location>/WEB-INF/errorpage/errorfile.jsp</location>
+	</error-page>
+	<!-- 出现异常 -->
+	<error-page>
 	   	<exception-type>java.lang.Exception</exception-type>
 	    <location>/WEB-INF/errorpage/exception.jsp</location>
 	</error-page>
