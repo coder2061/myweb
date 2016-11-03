@@ -33,9 +33,9 @@
 		<param-value>
 			classpath:spring-context.xml,
 			classpath:spring-hibernate.xml,
-	        classpath:tools/spring-quartz.xml
+	        classpath:tools/spring-quartz.xml,
+			classpath:tools/spring-redis.xml
 			<!-- 
-			classpath:tools/spring-redis.xml,
 			classpath:tools/spring-shiro.xml,
 	         -->
         </param-value>

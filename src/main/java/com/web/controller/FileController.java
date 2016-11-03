@@ -45,7 +45,7 @@ public class FileController {
     * 不然会抛出java.lang.NoSuchMethodException
     */
     @RequestMapping(value="/uploadFiles", method=RequestMethod.POST)  
-    public String uploadFiles(@RequestParam MultipartFile[] files, HttpServletRequest request) {  
+    public String uploadFiles(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) {  
     	for(MultipartFile file : files){   
     		System.out.println("文件长度: " + file.getSize());  
     		System.out.println("文件类型: " + file.getContentType());  
@@ -69,8 +69,7 @@ public class FileController {
 	    		Iterator<String> iterator = multiRequest.getFileNames();  
 	    		while (iterator.hasNext()) {  
 	    			// 由CommonsMultipartFile继承而来,拥有上面的方法.  
-	    			MultipartFile file = multiRequest.getFile(iterator.next()); 
-	    			System.out.println(iterator.next());
+	    			MultipartFile file = multiRequest.getFile(iterator.next());
 	    			if (file != null) {  
 	    				String path = "D:/" + file.getOriginalFilename(); 
 	    				File localFile = new File(path);  

@@ -180,11 +180,11 @@ public class PropertiesUtil {
 		return readProperties(propName);
 	}
 
-	// public static void main(String[] args) {
-	// Map<String, String> map2 = new HashMap<String, String>();
-	// map2.put("key1", "value1");
-	// map2.put("key2", "value2");
-	// writeProperties(map2);
-	// }
+//	public static void main(String[] args) {
+//		Map<String, String> map2 = new HashMap<String, String>();
+//		map2.put("key1", "value1");
+//		map2.put("key2", "value2");
+//		writeProperties(map2);
+//	}
 
 }
