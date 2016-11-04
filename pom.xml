@@ -43,9 +43,9 @@
 		<!-- 开源的分析，编辑和创建Java代码的类库，方便Hibernate使用代理模式 -->
 		<!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
 		<dependency>
-		    <groupId>org.javassist</groupId>
-		    <artifactId>javassist</artifactId>
-		    <version>3.20.0-GA</version>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.20.0-GA</version>
 		</dependency>
 		<!-- Java中的事务处理API -->
 		<dependency>
@@ -182,22 +182,85 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
+
 		<!-- 集成服务 -->
-	    <!-- quartz作业调度 -->
-	    <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+		<!-- quartz作业调度 -->
+		<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
 		<dependency>
-		    <groupId>org.quartz-scheduler</groupId>
-		    <artifactId>quartz</artifactId>
-		    <version>2.2.2</version>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz-jobs -->
 		<dependency>
-		    <groupId>org.quartz-scheduler</groupId>
-		    <artifactId>quartz-jobs</artifactId>
-		    <version>2.2.2</version>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
+			<version>2.2.2</version>
 		</dependency>
-		
+
+		<!-- WebService -->
+		<!-- axis WebService -->
+		<dependency>
+			<groupId>axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
+			<exclusions>
+				<exclusion>
+					<groupId>axis</groupId>
+					<artifactId>axis-wsdl4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- cxf WebService -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-core</artifactId>
+			<version>3.1.6</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>wsdl4j</artifactId>
+					<groupId>wsdl4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-bindings-soap</artifactId>
+			<version>3.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>3.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>3.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>3.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http-jetty</artifactId>
+			<version>3.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.ws.commons.schema/XmlSchema -->
+		<dependency>
+			<groupId>org.apache.ws.commons.schema</groupId>
+			<artifactId>XmlSchema</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+
 		<!-- 服务器组件 -->
 		<!-- jboss -->
 		<dependency>
@@ -220,25 +283,25 @@
 			<artifactId>jboss-annotations-api_1.2_spec</artifactId>
 			<version>1.0.0.Final</version>
 		</dependency>
-		
+
 		<!-- redis缓存 -->
 		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
 		<dependency>
-		    <groupId>redis.clients</groupId>
-		    <artifactId>jedis</artifactId>
-		    <version>2.9.0</version>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.9.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
 		<dependency>
-		    <groupId>org.springframework.data</groupId>
-		    <artifactId>spring-data-redis</artifactId>
-		    <version>1.7.4.RELEASE</version>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.7.4.RELEASE</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-pool2</artifactId>
-		    <version>2.4.2</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.4.2</version>
 		</dependency>
 
 		<!-- 数据源组件 -->
@@ -276,37 +339,27 @@
 		<!-- 日志组件 -->
 		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 		<dependency>
-		    <groupId>log4j</groupId>
-		    <artifactId>log4j</artifactId>
-		    <version>1.2.17</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-		<!-- 
-		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-api</artifactId>
-		    <version>1.7.21</version>
-		</dependency>
-		 -->
+		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
+			<version>1.7.21</version> </dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
-		<!-- 
-		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-log4j12</artifactId>
-		    <version>1.7.21</version>
-		</dependency>
-		 -->
+		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-log4j12</artifactId> 
+			<version>1.7.21</version> </dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-nop -->
 		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-nop</artifactId>
-		    <version>1.7.21</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-nop</artifactId>
+			<version>1.7.21</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.slf4j/log4j-over-slf4j -->
 		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>log4j-over-slf4j</artifactId>
-		    <version>1.7.21</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>1.7.21</version>
 		</dependency>
 
 		<!-- 通用编码解码包 -->
@@ -378,6 +431,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- 谷歌二维码 -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
 		<!-- 上传组件包 -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -397,17 +457,11 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>2.2</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.2</version>
 		</dependency>
 	</dependencies>
-
-	<!-- 另外一种激活方式 -->
-	<!-- <profiles> <profile> <id>jdk-1.8</id> <activation> <activeByDefault>true</activeByDefault> 
-		<jdk>${jdk.version}</jdk> </activation> <properties> <maven.compiler.source>${jdk.version}</maven.compiler.source> 
-		<maven.compiler.target>${jdk.version}</maven.compiler.target> <maven.compiler.compilerVersion>${jdk.version}</maven.compiler.compilerVersion> 
-		</properties> </profile> </profiles> -->
 
 	<build>
 		<pluginManagement>
