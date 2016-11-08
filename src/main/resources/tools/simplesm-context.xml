@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		   http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- mode: ${mode} -->
+	<!--<aop:aspectj-autoproxy /> -->
+	
+	<!-- 切入点是通过标签的方式来进行声明的，在项目开发时，通常在DAO的方法上加以相应的标签描述，来表示组件对该方法的拦截 -->
+
+	<context:component-scan base-package="com.google.code.ssm" />
+
+	<bean id="cacheBase" class="com.google.code.ssm.aop.CacheBase" />
+	
+	<!-- 当遇到查询方法声明这些切入点时，组件首先会从缓存中读取数据，取到数据则跳过查询方法，直接返回；取不到数据在执行查询方法，并将查询结果放入缓存，以便下一次获取 -->
+
+	<bean id="readThroughSingleCache" class="com.google.code.ssm.aop.ReadThroughSingleCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	<bean id="readThroughMultiCache" class="com.google.code.ssm.aop.ReadThroughMultiCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	<bean id="readThroughAssignCache" class="com.google.code.ssm.aop.ReadThroughAssignCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	
+	<!-- 当遇到更新方法声明这些切入点是，组件会更新缓存中对应的实体，以便下次从缓存中读取出的数据状态是最新的 -->
+	
+	<bean id="updateSingleCache" class="com.google.code.ssm.aop.UpdateSingleCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	<bean id="updateMultiCache" class="com.google.code.ssm.aop.UpdateMultiCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	<bean id="updateAssignCache" class="com.google.code.ssm.aop.UpdateAssignCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	
+	<!-- 当遇到删除方法声明这些切入点时，组件会删除缓存中的对应实体 -->
+	
+	<bean id="invalidateSingleCache" class="com.google.code.ssm.aop.InvalidateSingleCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	<bean id="invalidateMultiCache" class="com.google.code.ssm.aop.InvalidateMultiCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	<bean id="invalidateAssignCache" class="com.google.code.ssm.aop.InvalidateAssignCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+
+	<bean id="incrementCounterInCache" class="com.google.code.ssm.aop.counter.IncrementCounterInCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	<bean id="decrementCounterInCache" class="com.google.code.ssm.aop.counter.DecrementCounterInCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	<bean id="readCounterFromCache" class="com.google.code.ssm.aop.counter.ReadCounterFromCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+	<bean id="updateCounterInCache" class="com.google.code.ssm.aop.counter.UpdateCounterInCacheAdvice">
+		<property name="cacheBase" ref="cacheBase" />
+	</bean>
+
+</beans>

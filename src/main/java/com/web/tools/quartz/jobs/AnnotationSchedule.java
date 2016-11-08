@@ -18,7 +18,7 @@ public class AnnotationSchedule {
 	 * （1）实现类上要有组件的注解@Component；
 	 * （2）定时器的任务方法不能有返回值；若有返回值，spring初始化时报错，需要设定一个proxytargetclass的某个值为true
 	 */
-	@Scheduled(cron = "0 0/2 * * * ?")
+	@Scheduled(cron = "0 0 0/2 * * ?")
 	public void testAnnotation() {
 		System.out.println("定时任务：@Scheduled注解实现，时间："
 				+ DateUtils.getDateStrByPattern(new Date(),

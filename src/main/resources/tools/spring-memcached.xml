@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+				        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+				        http://www.springframework.org/schema/context
+				        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+				        http://www.springframework.org/schema/mvc
+				        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+				        http://www.springframework.org/schema/aop
+				        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+				        http://www.springframework.org/schema/tx
+				        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+				        http://www.springframework.org/schema/cache
+				        http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
+
+	<description>memcached缓存</description>
+	
+	<!-- 启用缓存注解 -->  
+    <cache:annotation-driven cache-manager="cacheManager"/>  
+    <bean id="cacheManager" class="org.springframework.cache.concurrent.ConcurrentMapCacheManager" />
+
+	<!-- ssm配置文件，主要用来加载组件核心的Advice，供程序调度使用；封装在 simple-spring-memcached.jar文件中-->
+    <import resource="simplesm-context.xml" />
+    
+    <!-- 启动代理机制  -->
+	<!-- simple-spring-memcached本质上是采用了AOP的方式来实现缓存的调用和管理，其核心组件声明了一些Advice，当遇到相应的切入点时，会执行这些Advice来对memcached加以管理。 -->
+    <aop:aspectj-autoproxy />
+    
+    <!-- simple-spring-memcached本身并不提供cache机制的实现，只是为了cache的调用更加简单而设计的。在cache的实现上使用的是第三方组件(如x-memcached和spy-memcached) -->
+    
+    <!-- 缓存工厂，返回Cache实体供Advice使用 -->
+    <bean id="xmemcachedClient" class="com.google.code.ssm.CacheFactory">
+    	<!-- memcached比较常用的Java客户端有两种，spymemcached和xmemcached，xmemcached支持多线程，比 SpyMemcache并发效果更好 -->
+        <property name="cacheClientFactory">
+            <bean class="com.google.code.ssm.providers.xmemcached.MemcacheClientFactoryImpl" />
+        </property>
+        <!-- 定义了缓存节点的IP地址和端口号 -->
+        <property name="addressProvider">
+            <bean class="com.google.code.ssm.config.DefaultAddressProvider">
+                <property name="address" value="127.0.0.1:11211" />
+            </bean>
+        </property>
+        <!-- 定义了缓存节点的查找方法 -->
+        <property name="configuration">
+            <bean class="com.google.code.ssm.providers.CacheConfiguration">
+                <property name="consistentHashing" value="true" />
+            </bean>
+        </property>
+    </bean>
+	<!-- 
+	<bean id="spymemcachedClient" class="com.google.code.ssm.CacheFactory">
+		<property name="cacheClientFactory">
+			<bean class="com.google.code.ssm.providers.spymemcached.MemcacheClientFactoryImpl" />
+		</property>
+		<property name="addressProvider">
+			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
+				<property name="address" value="127.0.0.1:11211" />
+			</bean>
+		</property>
+		<property name="configuration">
+			<bean class="com.google.code.ssm.providers.CacheConfiguration">
+				<property name="consistentHashing" value="true" />
+			</bean>
+		</property>
+	</bean>
+	 -->
+
+	<!-- spring缓存管理器，这里定义了两个缓存位置名称 ，即注解中的value -->
+	<!-- 
+	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+		<property name="caches">
+			<set>
+				<bean class="org.cpframework.core.cache.memcached.MemcachedCache">
+					<property name="cache" ref="xmemcachedClient" />
+				</bean>
+				<bean class="org.cpframework.core.cache.memcached.MemcachedCache">
+					<property name="cache" ref="spymemcachedClient" />
+				</bean>
+			</set>
+		</property>
+	</bean>
+	 -->
+</beans>

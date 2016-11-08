@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context-4.0.xsd" 
+	default-lazy-init="false">
+	
+	<!-- 引入properties配置文件 -->
+	<context:property-placeholder location="classpath:config/memcached.properties" ignore-unresolvable="true" />
+	
+	<bean id="memCachedPool" class="com.whalin.MemCached.SockIOPool" lazy-init="false"
+		factory-method="getInstance" init-method="initialize" destroy-method="shutDown">
+		<constructor-arg>
+			<value>memCachedPool</value>
+		</constructor-arg>
+		<property name="servers">
+			<list>
+				<value>${memcached.server}</value>
+			</list>
+		</property>
+		<property name="failover" value="${memcached.failover}" />
+		<property name="initConn" value="${memcached.initConn}" />
+		<property name="minConn" value="${memcached.minConn}" />
+		<property name="maxConn" value="${memcached.maxConn}" />
+		<property name="maintSleep" value="${memcached.maintSleep}" />
+		<property name="nagle" value="${memcached.nagle}" />
+		<property name="socketTO" value="${memcached.socketTO}" />
+		<property name="aliveCheck" value="${memcached.aliveCheck}" />
+	</bean>
+	<bean id="memCachedClient" class="com.whalin.MemCached.MemCachedClient">
+		<constructor-arg>
+			<value>memCachedPool</value>
+		</constructor-arg>
+	</bean>
+</beans>

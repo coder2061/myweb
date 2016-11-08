@@ -12,6 +12,10 @@ import com.web.core.config.BizExpDictionary;
 import com.web.core.exception.BizException;
 
 public class DateUtils {
+	private static final String YMD = "yyyyMMdd";
+	private static final String YYMMDD = "yyyy-MM-dd";
+	private static final String YMDHMS = "yyyyMMddHHmmss";
+	private static final String YYMMDDHHMMSS = "yyyy-MM-dd HH:mm:ss";
 
 	public static String getDateStrByPattern(Date date, String pattern) {
 		return new SimpleDateFormat(pattern).format(date);

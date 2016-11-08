@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:jms="http://www.springframework.org/schema/jms" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+				        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+				        http://www.springframework.org/schema/context 
+				        http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+				        http://www.springframework.org/schema/mvc 
+				        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+				        http://www.springframework.org/schema/jms 
+				        http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+	<description>ActiveMQ 消息队列</description>
+
+	<!-- 引入properties配置文件 -->
+	<context:property-placeholder location="classpath:config/activemq.properties"
+		ignore-unresolvable="true" />
+
+	<!-- ActiveMQ工厂，由对应的JMS服务厂商提供 -->
+	<bean id="mqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${mq.brokerURL}" />
+		<property name="userName" value="${mq.userName}" />
+		<property name="password" value="${mq.password}" />
+		<!-- 信任所有的包路径 -->
+		<!-- <property name="trustAllPackages" value="true" /> -->
+		<!-- 信任指定包路径的对象 -->
+		<property name="trustedPackages">
+			<list>
+				<value>com.web.model</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 连接池，可以将Connection、Session和MessageProducer池化，减少资源消耗，要依赖于 activemq-pool包 -->
+	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory" ref="mqConnectionFactory" />
+		<property name="maxConnections" value="${mq.pool.maxConnections}" />
+	</bean>
+
+	<!-- Spring代理工厂，用于管理真正的ActiveMQ工厂 -->
+	<bean id="jmsConnectionFactory"
+		class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="pooledConnectionFactory" />
+	</bean>
+
+	<!-- 队列模板 ，Spring提供的JMS工具类，可以进行消息发送、接收等对JMS协议的实现，默认开启消息持久化 -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="defaultDestinationName" value="${mq.queueName1}" />
+	</bean>
+
+	<!--这个是sessionAwareQueue目的地 -->
+	<bean id="sessionAwareQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg>
+			<value>${mq.queueName1}</value>
+		</constructor-arg>
+	</bean>
+	<!-- 可以获取session的MessageListener，需要实现SessionAwareMessageListener -->
+	<bean id="consumerMessageListener" class="com.web.tools.activemq.listener.ConsumerMessageLister" />
+
+	<bean id="sessionAwareListenerContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<!-- 监听的队列 -->
+		<property name="destination" ref="sessionAwareQueue" />
+		<!-- 指定接收消息的消息监听 -->
+		<property name="messageListener" ref="consumerMessageListener" />
+	</bean>
+
+	<!-- 消费者工具类配置 -->
+	<bean id="activemqClient" class="com.web.tools.activemq.client.ActivemqClient" />
+
+	<!-- 消费者方法配置 -->
+	<jms:listener-container connection-factory="jmsConnectionFactory">
+		<jms:listener destination="messageQueue1" ref="activemqClient"
+			method="messageQueue1" />
+		<jms:listener destination="messageQueue2" ref="activemqClient"
+			method="messageQueue2" />
+	</jms:listener-container>
+
+</beans>

@@ -1,5 +1,7 @@
 package com.web.core.context;
 
+import java.util.Map;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
@@ -54,6 +56,29 @@ public class SpringContext implements ApplicationContextAware {
 	public static Object getBean(String name) throws BeansException {
 		return applicationContext.getBean(name);
 	}
+	
+	/**
+	 * 从静态变量ApplicationContext中取得Bean, 自动转型为所赋值对象的类型.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T getBean2(String name) {
+		checkApplicationContext();
+		return (T) applicationContext.getBean(name);
+	}
+	
+	/**
+	 * 从静态变量ApplicationContext中取得Bean, 自动转型为所赋值对象的类型.
+	 * 如果有多个Bean符合Class, 取出第一个.
+	 */
+	public static <T> T getBean3(Class<T> clazz) {
+		checkApplicationContext();
+		Map<String, T> beanMaps = applicationContext.getBeansOfType(clazz);
+		if (beanMaps != null && !beanMaps.isEmpty()) {
+			return (T) beanMaps.values().iterator().next();
+		} else {
+			return null;
+		}
+	}
 
 	/**
 	 * 获取类型为requiredType的对象
@@ -69,6 +94,13 @@ public class SpringContext implements ApplicationContextAware {
 	public static Object getBean(String name, Class<?> requiredType)
 			throws BeansException {
 		return applicationContext.getBean(name, requiredType);
+	}
+
+	private static void checkApplicationContext() {
+		if (applicationContext == null) {
+			throw new IllegalStateException(
+					"applicaitonContext未注入,请在applicationContext.xml中定义SpringContext");
+		}
 	}
 
 	/**
@@ -118,8 +150,7 @@ public class SpringContext implements ApplicationContextAware {
 
 	public static void main(String[] args) {
 		// 获取spring装配的bean个数
-		String[] beans = SpringContext.getInstance()
-				.getBeanDefinitionNames();
+		String[] beans = SpringContext.getInstance().getBeanDefinitionNames();
 		// 逐个打印出spring自动装配的bean。根据我的测试，类名第一个字母小写即bean的名字
 		for (int i = 0; i < beans.length; i++) {
 			System.out.println(beans[i]);

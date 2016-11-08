@@ -42,17 +42,18 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public ModelAndView test() {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("jsp/commonTest");
-		return model;
+	public String test() {
+		return "jsp/commonTest";
 	}
 	
 	@RequestMapping(value = "/check", method = RequestMethod.GET)
-	public ModelAndView check() {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("jsp/checkCard");
-		return model;
+	public String check() {
+		return "jsp/checkCard";
+	}
+	
+	@RequestMapping(value = "/socket/{example}", method = RequestMethod.GET)
+	public String socket(@PathVariable String example) {
+		return "websocket/" + example;
 	}
 
 }

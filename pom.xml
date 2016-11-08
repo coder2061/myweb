@@ -7,6 +7,32 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>myweb Maven Webapp</name>
 	<url>http://maven.apache.org</url>
+	
+    <repositories>
+        <repository>
+            <!-- Maven自带的中央仓库使用的Id为central，如果其他的仓库声明也是用该Id就会覆盖中央仓库的配置 -->
+            <id>mvnrepository</id>
+            <name>mvnrepository</name>
+            <!-- 中央仓库地址，一般基于http协议 -->
+            <url>http://www.mvnrepository.com/</url>
+            <layout>default</layout>
+            <!-- 是否开启中央仓库的发布版本构件下载支持 -->
+            <releases>
+                <enabled>true</enabled>
+                <!-- 配置Maven从远程仓库检查更新的频率，默认值是daily-每天检查一次；never-从不检查更新；always-每次构建都检查更新；interval:X-每隔X分钟检查一次更新(X为任意整数) -->
+                <updatePolicy>always</updatePolicy>
+                <!-- 配置Maven检查检验和文件的策略，Maven会在执行构建遇到校验和错误时，默认值warn-输出警告信息；fail-显示构建失败；ignore-忽略校验和错误 -->
+                <checksumPolicy>fail</checksumPolicy>
+            </releases>
+            <!-- 是否开启中央仓库的快照版本构件下载支持 -->
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+	
 	<!-- 属性配置 -->
 	<properties>
 		<jdk.version>1.8</jdk.version>
@@ -16,37 +42,45 @@
 		<!-- hibernate核心组件 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.2.5.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.2.5.Final</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-ehcache</artifactId>
+			<artifactId>hibernate-core</artifactId>
 			<version>4.2.5.Final</version>
-		</dependency>
-		<!-- Hibernate的注解Annotation类库 -->
-		<dependency>
-			<groupId>org.hibernate.common</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>4.0.2.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<version>1.0.1.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>4.0.2.Final</version>
+		</dependency>
+		 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>4.2.5.Final</version>
+			<exclusions>
+				<exclusion>
+					<groupId>net.sf.ehcache</groupId>
+					<artifactId>ehcache-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<!-- 开源的分析，编辑和创建Java代码的类库，方便Hibernate使用代理模式 -->
-		<!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
+		<!-- 
 		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.20.0-GA</version>
 		</dependency>
+		 -->
 		<!-- Java中的事务处理API -->
 		<dependency>
 			<groupId>javax.transaction</groupId>
@@ -55,6 +89,12 @@
 		</dependency>
 
 		<!-- spring核心组件 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>4.3.2.RELEASE</version>
+		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -72,24 +112,20 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
+			<artifactId>spring-web</artifactId>
 			<version>4.3.2.RELEASE</version>
 		</dependency>
+		 -->
 		<!-- 关系型数据库整合时需配置 如hibernate、jpa等 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>4.3.2.RELEASE</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
-			<version>4.3.2.RELEASE</version>
-		</dependency>
-		<!-- 整合单元测试框架 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
+			<artifactId>spring-jdbc</artifactId>
 			<version>4.3.2.RELEASE</version>
 		</dependency>
 		<dependency>
@@ -99,13 +135,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
+			<artifactId>spring-oxm</artifactId>
 			<version>4.3.2.RELEASE</version>
 		</dependency>
-		<!-- spring-mvc -->
+		 -->
+		<!-- 整合单元测试框架 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
+			<artifactId>spring-test</artifactId>
 			<version>4.3.2.RELEASE</version>
 		</dependency>
 
@@ -127,6 +164,7 @@
 		</dependency>
 
 		<!-- spring-mvc映射POJO对象使用的json类库 -->
+		<!-- 
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-lgpl</artifactId>
@@ -137,6 +175,7 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.6</version>
 		</dependency>
+		 -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -149,39 +188,58 @@
 		</dependency>
 		<!-- spring-mvc映射POJO对象使用的json类库 -->
 		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.1.4</version>
+			<version>2.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.1.4</version>
+			<version>2.8.0</version>
 		</dependency>
+		 -->
+		<!-- https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream -->
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.1.4</version>
+		    <groupId>com.thoughtworks.xstream</groupId>
+		    <artifactId>xstream</artifactId>
+		    <version>1.4.9</version>
 		</dependency>
+		
+
 
 		<!-- servlet api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>javax.servlet.jsp-api</artifactId>
 			<version>2.3.1</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+		    <groupId>javax</groupId>
+		    <artifactId>javaee-api</artifactId>
+		    <version>7.0</version>
+		</dependency>
+		
 
 		<!-- 集成服务 -->
 		<!-- quartz作业调度 -->
@@ -190,12 +248,78 @@
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>2.2.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>c3p0</groupId>
+					<artifactId>c3p0</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz-jobs -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz-jobs</artifactId>
 			<version>2.2.2</version>
+		</dependency>
+		
+		<!-- lucene全文检索 -->
+		<!-- 包含常用的文档，索引，搜索，存储等相关核心代码 -->
+		<!-- 
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+		 -->
+		<!-- 用于模糊搜索，范围搜索等各种搜索 -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-queryparser</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+		<!-- 包含用于对文件内容进行关键字切分，提取的各种语言的词法分析器 -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers-smartcn</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+		<!-- 主要用于搜索出的内容高亮显示 -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-highlighter</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+
+		<!-- shiro安全控制框架 -->
+		<!-- 
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		 -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		
+		<!-- websocket -->
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- 用于在websocket的后端注入service -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>4.3.2.RELEASE</version>
 		</dependency>
 
 		<!-- WebService -->
@@ -214,6 +338,17 @@
 		<!-- cxf WebService -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>3.1.6</version>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-bindings-soap</artifactId>
+			<version>3.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-core</artifactId>
 			<version>3.1.6</version>
 			<exclusions>
@@ -223,41 +358,58 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-bindings-soap</artifactId>
-			<version>3.1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>3.1.6</version>
-		</dependency>
+		 -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
 			<version>3.1.6</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http</artifactId>
 			<version>3.1.6</version>
 		</dependency>
+		 -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http-jetty</artifactId>
 			<version>3.1.6</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>wsdl4j</groupId>
 			<artifactId>wsdl4j</artifactId>
 			<version>1.6.3</version>
 		</dependency>
+		 -->
 		<!-- https://mvnrepository.com/artifact/org.apache.ws.commons.schema/XmlSchema -->
 		<dependency>
 			<groupId>org.apache.ws.commons.schema</groupId>
 			<artifactId>XmlSchema</artifactId>
 			<version>1.4.7</version>
+		</dependency>
+		
+		<!-- 消息队列 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>4.3.2.RELEASE</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.activemq</groupId>
+		    <artifactId>activemq-core</artifactId>
+		    <version>5.6.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.activemq</groupId>
+		    <artifactId>activemq-pool</artifactId>
+		    <version>5.14.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-configuration</groupId>
+		    <artifactId>commons-configuration</artifactId>
+		    <version>1.10</version>
 		</dependency>
 
 
@@ -273,41 +425,96 @@
 			<artifactId>jandex</artifactId>
 			<version>1.1.0.Final</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.jboss.logging</groupId>
 			<artifactId>jboss-logging</artifactId>
-			<version>3.1.3.GA</version>
+			<version>3.1.0.GA</version>
 		</dependency>
+		 -->
 		<dependency>
 			<groupId>org.jboss.spec.javax.annotation</groupId>
 			<artifactId>jboss-annotations-api_1.2_spec</artifactId>
 			<version>1.0.0.Final</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/tomcat -->
+		<dependency>
+		    <groupId>tomcat</groupId>
+		    <artifactId>jsp-api</artifactId>
+		    <version>5.5.23</version>
+		</dependency>
+		<dependency>  
+		    <groupId>tomcat</groupId>  
+		    <artifactId>jasper-compiler</artifactId>  
+		    <version>5.5.23</version>  
+		</dependency>
+		<dependency>
+		    <groupId>tomcat</groupId>
+		    <artifactId>jasper-compiler-jdt</artifactId>
+		    <version>5.5.23</version>
+		</dependency>
+		<dependency>  
+		    <groupId>tomcat</groupId>  
+		    <artifactId>jasper-runtime</artifactId>  
+		    <version>5.5.23</version>  
+		</dependency>
 
 		<!-- redis缓存 -->
-		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
 		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>2.9.0</version>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
+			<version>1.2.2.RELEASE</version>
+			<!-- 
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.data</groupId>
+					<artifactId>spring-data-redis</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>redis.clients</groupId>
+					<artifactId>jedis</artifactId>
+				</exclusion>
+			</exclusions>
+			 -->
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
 			<version>1.7.4.RELEASE</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis -->
 		<dependency>
-		    <groupId>org.springframework.session</groupId>
-		    <artifactId>spring-session-data-redis</artifactId>
-		    <version>1.2.2.RELEASE</version>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.9.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-pool2</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
+		
+		<!-- memcached缓存 -->
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-pool2</artifactId>
-			<version>2.4.2</version>
+		    <groupId>com.google.code.simple-spring-memcached</groupId>
+		    <artifactId>spring-cache</artifactId>
+		    <version>3.6.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.code.simple-spring-memcached</groupId>
+		    <artifactId>xmemcached-provider</artifactId>
+		    <version>3.6.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.code.simple-spring-memcached</groupId>
+		    <artifactId>spymemcached-provider</artifactId>
+		    <version>3.6.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.whalin</groupId>
+		    <artifactId>Memcached-Java-Client</artifactId>
+		    <version>3.0.2</version>
 		</dependency>
 
 		<!-- 数据源组件 -->
@@ -320,7 +527,7 @@
 		<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
-			<version>0.9.1.2</version>
+			<version>0.9.1.1</version>
 		</dependency>
 		<!-- dbcp数据源 -->
 		<dependency>
@@ -335,7 +542,6 @@
 			<version>1.0.24</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache-core -->
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
@@ -343,29 +549,20 @@
 		</dependency>
 
 		<!-- 日志组件 -->
-		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
-			<version>1.7.21</version> </dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
-		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-log4j12</artifactId> 
-			<version>1.7.21</version> </dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-nop -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-nop</artifactId>
-			<version>1.7.21</version>
+			<version>1.7.7</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.slf4j/log4j-over-slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>log4j-over-slf4j</artifactId>
-			<version>1.7.21</version>
+			<version>1.7.7</version>
 		</dependency>
 
 		<!-- 通用编码解码包 -->
@@ -376,31 +573,29 @@
 		</dependency>
 
 		<!-- Java开源语法分析生成器 -->
+		<!-- 
 		<dependency>
 			<groupId>antlr</groupId>
 			<artifactId>antlr</artifactId>
 			<version>2.7.6</version>
 		</dependency>
+		 -->
 
 		<!-- Google 的一个开源项目，包含许多 Google 核心的 Java 常用库。 -->
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>19.0</version>
 		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.1</version>
-		</dependency>
 
 		<!-- XML文档解析 -->
+		<!-- 
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
 		</dependency>
+		 -->
 		<dependency>
 			<groupId>sax</groupId>
 			<artifactId>sax</artifactId>
@@ -449,11 +644,17 @@
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-io</groupId>
+					<artifactId>commons-io</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.8.3</version>
+			<version>1.8.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -466,6 +667,11 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.0.1</version>
 		</dependency>
 	</dependencies>
 

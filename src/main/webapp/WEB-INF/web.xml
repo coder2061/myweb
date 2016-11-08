@@ -13,6 +13,7 @@
 	 -->
 	 
 	<!-- web.xml 的加载顺序是：ServletContext -> context-param -> listener -> filter -> servlet -->
+	<!-- tomcat多项目启动 -->
 	<context-param>
 	    <param-name>webAppRootKey</param-name>
 	    <param-value>webApp.root</param-value>
@@ -35,7 +36,10 @@
 			classpath:spring-hibernate.xml,
 	        classpath:tools/spring-quartz.xml,
 			classpath:tools/spring-redis.xml,
-			classpath:tools/spring-cxf.xml
+			classpath:tools/spring-cxf.xml,
+			classpath:tools/spring-activemq.xml,
+			classpath:tools/spring-memcached.xml,
+			classpath:tools/spring-whalin.xml
 			<!-- 
 			classpath:tools/spring-shiro.xml,
 	         -->
@@ -90,14 +94,16 @@
 	</listener>
 	<!-- 防止Spring内存溢出监听器 -->
     <listener>
-	    <listener-class>
-	    	org.springframework.web.util.IntrospectorCleanupListener
-	    </listener-class>
+	    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
 	<!--Spring Log4j监听器-->
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
+	<!-- request监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
 	
 	<!-- SpringMVC核心配置 -->
 	<servlet>
