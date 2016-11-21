@@ -11,6 +11,12 @@ public class MQProducer {
 	private static final String BROKERURL = ActiveMQConnection.DEFAULT_BROKER_URL;
 	private static final int NUM = 10;
 
+	/**
+	 * 发送消息
+	 * 
+	 * @param msg
+	 * @param queueName
+	 */
 	public static void sendMsg(String msg, String queueName) {
 		// 创建会话工厂
 		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
@@ -43,6 +49,13 @@ public class MQProducer {
 		}
 	}
 
+	/**
+	 * 发送消息
+	 * 
+	 * @param msg
+	 * @param session
+	 * @param messageProducer
+	 */
 	public static void sendMsg(String msg, Session session,
 			MessageProducer producer) {
 		for (int i = 0; i < NUM; i++) {
