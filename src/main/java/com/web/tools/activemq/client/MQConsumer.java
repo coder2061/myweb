@@ -38,6 +38,13 @@ public class MQConsumer {
 			e.printStackTrace();
 		} finally {
 			closeAll(consumer, session, connection);
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (JMSException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
