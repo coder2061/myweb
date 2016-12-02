@@ -7,12 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.web.dao.UserDao;
+import com.web.dao.base.BaseDao;
 import com.web.entity.User;
 
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
+	@Autowired
+	private BaseDao baseDao;
+	
+	public User selectOne(Integer id) {
+		return baseDao.findObjectBySql("select * from user where id=?", id);
+	}
 
 	@Override
 	public User getUser(Integer id) {

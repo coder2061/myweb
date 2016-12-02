@@ -20,7 +20,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUser(int id) {
-		return userDao.getUser(id);
+//		return userDao.getUser(id);
+		return userDao.selectOne(id);
 	}
 
 }

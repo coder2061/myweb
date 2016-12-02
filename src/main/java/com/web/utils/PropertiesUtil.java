@@ -24,15 +24,40 @@ import com.google.common.io.Resources;
  * @author jiangyf
  */
 public class PropertiesUtil {
-	// 属性文件的路径
-	private static final String profilepath = "D:\\config\\common.properties";
-
 	private static Map<String, String> map = null;
 	private static Properties props = new Properties();
 
-	static {
+	/**
+	 * 加载配置文件
+	 * 
+	 * @param propPath
+	 *            文件路径
+	 * @return void
+	 */
+	public static void loadByPropPath(String propPath) {
 		try {
-			props.load(new FileInputStream(profilepath));
+			InputStream in = new FileInputStream(propPath);
+			props.load(in);
+			in.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 加载配置文件
+	 * 
+	 * @param propName
+	 *            文件名
+	 * @return void
+	 */
+	public static void loadByPropName(String propName) {
+		try {
+			InputStream in = ClassLoader.class.getResourceAsStream(propName);
+			props.load(in);
+			in.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -65,9 +90,7 @@ public class PropertiesUtil {
 			InputStream in = new BufferedInputStream(new FileInputStream(
 					filePath));
 			props.load(in);
-			String value = props.getProperty(key);
-			System.out.println(key + "键的值是：" + value);
-			return value;
+			return props.getProperty(key);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -98,11 +121,11 @@ public class PropertiesUtil {
 	 * @param map
 	 *            键值对
 	 */
-	public static void writeProperties(Map<String, String> map) {
+	public static void writeProperties(Map<String, String> map, String propPath) {
 		try {
 			// 调用 Hashtable 的方法 put，使用 getProperty 方法提供并行性。
 			// 强制要求为属性的键和值使用字符串。返回值是 Hashtable 调用 put 的结果。
-			OutputStream fos = new FileOutputStream(profilepath);
+			OutputStream fos = new FileOutputStream(propPath);
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				props.setProperty(entry.getKey(), entry.getValue());
 			}
