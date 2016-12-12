@@ -37,9 +37,9 @@ public class StoreTool {
 	}
 
 	public static MobileNumber mobileNumber(String mobile) {
-		String url = String.format(StoreApi.MOBILENUMBER, mobile);
+		String url = String.format(StoreApi.BAIDU_MOBILENUMBER, mobile);
 		Map<String, Object> header = new HashMap<String, Object>();
-		header.put("apikey", StoreApi.API_KEY);
+		header.put("apikey", StoreApi.BAIDU_API_KEY);
 		try {
 			String result = HttpUtil.sendGetWithHeader(url, header);
 			log.info("接口名称：StoreTool.mobileNumber，手机号：" + mobile + ",返回结果："
@@ -57,9 +57,9 @@ public class StoreTool {
 	
 	public static Identity identity(String id)
 			throws UnsupportedEncodingException {
-		String url = String.format(StoreApi.IDENTITY, id);
+		String url = String.format(StoreApi.BAIDU_IDENTITY, id);
 		Map<String, Object> header = new HashMap<String, Object>();
-		header.put("apikey", StoreApi.API_KEY);
+		header.put("apikey", StoreApi.BAIDU_API_KEY);
 		String result = HttpUtil.sendGetWithHeader(url, header);
 		log.info("接口名称：StoreTool.identity，身份证号：" + id + ",返回结果："
 				+ result);
