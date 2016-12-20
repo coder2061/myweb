@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class RedisManager<T> {
 	@Resource
 	private RedisTemplate<Serializable, Object> redisTemplate;
-	
+
 	/**
 	 * 批量删除对应的value
 	 * 
@@ -304,6 +304,46 @@ public class RedisManager<T> {
 	public Map<String, T> getCacheIntegerMap(String key,
 			HashOperations<String, String, T> hashOperation) {
 		return hashOperation.entries(key);
+	}
+
+	/**
+	 * 设置key过期时间
+	 * 
+	 * @param key
+	 * @param expireTime
+	 * @param type
+	 *            类型，0：日；1：时；2：分；3：秒（默认）；4：毫秒；5：微妙；6：纳秒
+	 * @return void
+	 */
+	public void expire(final String key, Long expireTime, int type) {
+		TimeUnit unit = null;
+		switch (type) {
+		case 0:
+			unit = TimeUnit.DAYS;
+			break;
+		case 1:
+			unit = TimeUnit.HOURS;
+			break;
+		case 2:
+			unit = TimeUnit.MINUTES;
+			break;
+		case 3:
+			unit = TimeUnit.SECONDS;
+			break;
+		case 4:
+			unit = TimeUnit.MILLISECONDS;
+			break;
+		case 5:
+			unit = TimeUnit.MICROSECONDS;
+			break;
+		case 6:
+			unit = TimeUnit.NANOSECONDS;
+			break;
+		default:
+			unit = TimeUnit.SECONDS;
+			break;
+		}
+		redisTemplate.expire(key, expireTime, unit);
 	}
 
 }
