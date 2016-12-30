@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao {
 		String hql = "update User u set u.name=? where u.id = ?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setString(0, user.getName());
-		query.setInteger(1, user.getId());
+		query.setString(1, user.getId());
 		return (query.executeUpdate() > 0);
 	}
 

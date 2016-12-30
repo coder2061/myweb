@@ -11,11 +11,10 @@
 	</c:if>
 	
 	<c:if test="${empty name}">
-		Welcome Welcome!
+		Welcome java!
 	</c:if>
 	
-	${sayHello }
-
+	Hello ${name } !
 
 </body>
 </html>

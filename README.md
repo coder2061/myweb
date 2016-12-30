@@ -35,6 +35,9 @@ IDE：
 	MySql
 	Druid
 	C3P0
+	Memcache
+	Redis
+	MongoDB
 	
 5）其他组件
 	日志组件：slf4j-log4j,slf4j-logback

@@ -518,18 +518,22 @@
 		</dependency>
 		
 		<!-- mongodb -->
-		<!-- 
 		<dependency>
 		    <groupId>org.mongodb</groupId>
 		    <artifactId>mongo-java-driver</artifactId>
 		    <version>3.2.2</version>
 		</dependency>
-		 -->
 		<!-- mongodb spring -->
 		<dependency>
 		    <groupId>org.springframework.data</groupId>
 		    <artifactId>spring-data-mongodb</artifactId>
 		    <version>1.9.5.RELEASE</version>
+		    <exclusions>
+				<exclusion>
+					<groupId>org.mongodb</groupId>
+					<artifactId>mongo-java-driver</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 

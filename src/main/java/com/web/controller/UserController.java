@@ -24,19 +24,19 @@ public class UserController {
 	@RequestMapping(value = "/sayHello", method = RequestMethod.GET)
 	public ModelAndView sayHello(HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
-		model.setViewName("/index");
+		model.setViewName("index");
 		String name = Common.getInstance().getUsername();
 //		String name = userService.getUser(1).getName();
 //		String name = userService.sayHello(request.getParameter("name"));
 		log.info("----" + name + "----");
-		model.addObject("sayHello", name);
+		model.addObject("name", name);
 		return model;
 	}
 	
 	@RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
 	public ModelAndView hello(@PathVariable("name") String name) {
 		ModelAndView model = new ModelAndView();
-		model.setViewName("index");
+		model.setViewName("jsp/index");
 		model.addObject("name", name);
 		return model;
 	}

@@ -7,12 +7,14 @@
 </head>
 <body>
 	<c:if test="${not empty name}">
-		Hello ${sayHello }
+		Hello ${name }
 	</c:if>
 	
 	<c:if test="${empty name}">
 		Welcome java!
 	</c:if>
+	
+	Hello ${name } !
 	
 </body>
 </html>

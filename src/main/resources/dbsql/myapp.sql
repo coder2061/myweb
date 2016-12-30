@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-10-25 16:00:50
+Date: 2017-01-06 18:24:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,10 +31,6 @@ CREATE TABLE `accesslog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of accesslog
--- ----------------------------
-
--- ----------------------------
 -- Table structure for admin
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
@@ -45,10 +41,6 @@ CREATE TABLE `admin` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ID_UNIQUE` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of admin
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for attachment
@@ -67,10 +59,6 @@ CREATE TABLE `attachment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='附件表';
 
 -- ----------------------------
--- Records of attachment
--- ----------------------------
-
--- ----------------------------
 -- Table structure for basic
 -- ----------------------------
 DROP TABLE IF EXISTS `basic`;
@@ -85,10 +73,6 @@ CREATE TABLE `basic` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of basic
--- ----------------------------
-
--- ----------------------------
 -- Table structure for config
 -- ----------------------------
 DROP TABLE IF EXISTS `config`;
@@ -100,10 +84,6 @@ CREATE TABLE `config` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ID_UNIQUE` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='配置信息';
-
--- ----------------------------
--- Records of config
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for contact
@@ -131,15 +111,6 @@ CREATE TABLE `contact` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='联系人表';
 
 -- ----------------------------
--- Records of contact
--- ----------------------------
-INSERT INTO `contact` VALUES ('1', '1', '4', '1', '姜子牙', '18779885539', 'jiangziya@jxau.com', '625337923', null, '北京朝阳', '2016-04-17 17:23:20', '2016-04-17 17:23:23', '0', '0', '1');
-INSERT INTO `contact` VALUES ('2', '2', '4', '1', 'Jade', '18779885540', 'jiang@jxau.com', '625337924', null, '北京朝阳', '2016-04-17 18:08:46', '2016-04-17 18:08:48', '0', '0', '1');
-INSERT INTO `contact` VALUES ('3', '3', '4', '2', 'aaa', '18779885512', 'jiang0@jxau.com', '66666666', null, 'beijing chaoyang', null, '2016-04-19 22:43:05', '0', '0', '1');
-INSERT INTO `contact` VALUES ('4', '5', '4', '3', 'qqq', '18779885512', 'jiang1@jxau.com', '1111111111111', null, '北京朝阳', null, null, '0', '0', '1');
-INSERT INTO `contact` VALUES ('5', '6', '4', '3', 'aaa', '18779885512', 'jiang2@jxau.com', '555555555', null, '望京', null, null, '0', '0', '1');
-
--- ----------------------------
 -- Table structure for contactgroup
 -- ----------------------------
 DROP TABLE IF EXISTS `contactgroup`;
@@ -155,14 +126,6 @@ CREATE TABLE `contactgroup` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='联系人分组';
 
 -- ----------------------------
--- Records of contactgroup
--- ----------------------------
-INSERT INTO `contactgroup` VALUES ('1', '亲戚', null, '2016-04-17 16:59:32', '1', '0', '0');
-INSERT INTO `contactgroup` VALUES ('2', '朋友', null, '2016-04-17 17:00:23', '2', '0', '0');
-INSERT INTO `contactgroup` VALUES ('3', '同学', null, '2016-04-17 17:00:25', '3', '0', '0');
-INSERT INTO `contactgroup` VALUES ('4', '同事', null, '2016-04-17 17:00:48', '4', '0', '0');
-
--- ----------------------------
 -- Table structure for content
 -- ----------------------------
 DROP TABLE IF EXISTS `content`;
@@ -173,32 +136,6 @@ CREATE TABLE `content` (
   `createDate` varchar(100) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`contentId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of content
--- ----------------------------
-INSERT INTO `content` VALUES ('2', null, '<p>9090<br/></p>', '2016-08-28 21:03:28');
-INSERT INTO `content` VALUES ('7', '你好', 'hah', '都会死');
-INSERT INTO `content` VALUES ('9', null, '<p>说的是都是<br/></p>', '2016-08-28 21:29:28');
-INSERT INTO `content` VALUES ('10', null, '哈哈你说的是呢<br/>', '2016-08-28 21:30:28');
-INSERT INTO `content` VALUES ('11', null, '<p>你说什么呢<br/></p>', '2016-08-28 23:53:28');
-INSERT INTO `content` VALUES ('12', null, '<p>你好啊<img src=\"http://img.baidu.com/hi/jx2/j_0026.gif\"/><br/></p>', '2016-08-29 00:28:29');
-INSERT INTO `content` VALUES ('13', null, '<p>nihao啊</p>', '2016-08-29 00:31:29');
-INSERT INTO `content` VALUES ('14', null, '说的', '2016-08-29 00:33:29');
-INSERT INTO `content` VALUES ('15', null, '哈哈哈哈<br/>', '2016-08-29 00:33:29');
-INSERT INTO `content` VALUES ('16', null, '你在干甚呢<br/>', '2016-08-29 00:33:29');
-INSERT INTO `content` VALUES ('17', null, '<p>搞好久</p>', '2016-08-29 01:00:29');
-INSERT INTO `content` VALUES ('18', null, '<p>8989<br/></p>', '2016-08-29 01:00:29');
-INSERT INTO `content` VALUES ('19', null, '9899', '2016-08-29 01:01:29');
-INSERT INTO `content` VALUES ('20', null, '家哈哈哈', '2016-08-29 01:01:29');
-INSERT INTO `content` VALUES ('21', null, '<p>说的是<br/></p>', '2016-08-29 01:02:29');
-INSERT INTO `content` VALUES ('22', null, '<p>哈哈</p>', '2016-08-29 01:02:29');
-INSERT INTO `content` VALUES ('23', null, '<p>你说什么<br/></p>', '2016-08-29 01:02:29');
-INSERT INTO `content` VALUES ('24', null, '909', '2016-08-29 01:03:29');
-INSERT INTO `content` VALUES ('25', null, '<p>你好<br/></p>', '2016-08-29 01:06:29');
-INSERT INTO `content` VALUES ('26', null, '你在干嘛呢<br/>', '2016-08-29 01:06:29');
-INSERT INTO `content` VALUES ('27', null, '<p>积极</p>', '2016-08-29 01:06:29');
-INSERT INTO `content` VALUES ('28', null, '7878', '2016-08-29 01:06:29');
 
 -- ----------------------------
 -- Table structure for feedback
@@ -219,10 +156,6 @@ CREATE TABLE `feedback` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户反馈表';
 
 -- ----------------------------
--- Records of feedback
--- ----------------------------
-
--- ----------------------------
 -- Table structure for log
 -- ----------------------------
 DROP TABLE IF EXISTS `log`;
@@ -241,52 +174,6 @@ CREATE TABLE `log` (
 ) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='日志表';
 
 -- ----------------------------
--- Records of log
--- ----------------------------
-INSERT INTO `log` VALUES ('1', '2', '0', '4', '0', '/myzone/member/login', '2016-04-16 20:20:28', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123', '1');
-INSERT INTO `log` VALUES ('2', '1', '0', '4', '0', '/myzone/member/register', '2016-04-16 20:50:32', '用户注册', 'http://localhost:8080/myzone/member/register?account=aaa&passwd=123', '0');
-INSERT INTO `log` VALUES ('3', '1', '0', '4', '0', '/myzone/member/register', '2016-04-16 20:57:35', '用户注册', 'http://localhost:8080/myzone/member/register?account=abc1&passwd=123', '0');
-INSERT INTO `log` VALUES ('4', '2', '0', '4', '0', '/myzone/member/login', '2016-04-16 20:57:53', '用户登录', 'http://localhost:8080/myzone/member/login?account=abc1&passwd=123&isRember=1', '0');
-INSERT INTO `log` VALUES ('5', '2', '0', '4', '0', '/myzone/member/login', '2016-04-16 20:59:10', '用户登录', 'http://localhost:8080/myzone/member/login?account=abc1&passwd=123&isRember=1', '0');
-INSERT INTO `log` VALUES ('6', '2', '0', '4', '0', '/myzone/member/login', '2016-04-16 21:39:04', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123', '0');
-INSERT INTO `log` VALUES ('7', '2', '0', '4', '0', '/myzone/member/login', '2016-04-16 21:39:56', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123', '0');
-INSERT INTO `log` VALUES ('8', '2', '0', '4', '0', '/myzone/member/login', '2016-04-16 21:42:35', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123', '0');
-INSERT INTO `log` VALUES ('9', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 10:40:25', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123&isRember=1', '0');
-INSERT INTO `log` VALUES ('10', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 10:48:46', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123&isRember=1', '0');
-INSERT INTO `log` VALUES ('11', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 14:52:36', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123', '0');
-INSERT INTO `log` VALUES ('12', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 15:36:05', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123', '0');
-INSERT INTO `log` VALUES ('13', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 16:09:48', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123', '0');
-INSERT INTO `log` VALUES ('14', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 16:15:07', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123', '0');
-INSERT INTO `log` VALUES ('15', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 16:15:33', '用户登录', 'http://localhost:8080/myzone/member/login?account=jyf&passwd=123', '0');
-INSERT INTO `log` VALUES ('16', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 17:26:10', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('17', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 17:35:05', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('18', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 18:36:53', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('19', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 19:18:46', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123&isRember=1', '0');
-INSERT INTO `log` VALUES ('20', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 20:55:19', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('21', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 21:50:06', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('22', '2', '0', '4', '0', '/myzone/member/login', '2016-04-17 23:32:00', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('23', '2', '0', '4', '0', '/myzone/member/login', '2016-04-18 17:44:48', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('24', '2', '0', '4', '0', '/myzone/member/login', '2016-04-18 18:21:34', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123&isRember=1', '0');
-INSERT INTO `log` VALUES ('25', '2', '0', '4', '0', '/myzone/member/login', '2016-04-18 20:24:18', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('26', '2', '0', '4', '0', '/myzone/member/login', '2016-04-18 21:02:46', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('27', '2', '0', '4', '0', '/myzone/member/login', '2016-04-18 21:32:20', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('28', '2', '0', '4', '0', '/myzone/member/login', '2016-04-18 22:29:41', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('29', '2', '0', '4', '0', '/myzone/member/login', '2016-04-18 23:38:27', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('30', '2', '0', '4', '0', '/myzone/member/login', '2016-04-19 22:00:34', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('31', '2', '0', '4', '0', '/myzone/member/login', '2016-04-19 22:41:41', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=123', '0');
-INSERT INTO `log` VALUES ('32', '5', '0', '4', '0', '/myzone/contact/delContact', '2016-04-19 22:41:56', '联系人ID：4', 'http://localhost:8080/myzone/contact/delContact?null', '0');
-INSERT INTO `log` VALUES ('33', '4', '0', '4', '0', '/myzone/contact/saveContact', '2016-04-19 22:43:05', '联系人ID：3', 'http://localhost:8080/myzone/contact/saveContact?ContactID=3&Name=aaa&Mobile=18779885512&Email=jiang0%40jxau.com&QQ=66666666&ContactGroupID=2&Address=beijing+chaoyang&HeadPic=', '0');
-INSERT INTO `log` VALUES ('34', '7', '0', '4', '0', '/myzone/member/editPasswd', '2016-04-19 22:49:43', '修改用户密码', 'http://localhost:8080/myzone/member/editPasswd?oldPasswd=123&newPasswd=111&rePasswd=111', '0');
-INSERT INTO `log` VALUES ('35', '2', '0', '4', '0', '/myzone/member/login', '2016-04-19 23:10:20', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=111', '0');
-INSERT INTO `log` VALUES ('36', '2', '0', '4', '0', '/myzone/member/login', '2016-04-19 23:14:36', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=111', '0');
-INSERT INTO `log` VALUES ('37', '6', '0', '4', '0', '/myzone/member/editMember', '2016-04-19 23:15:10', '修改用户信息', 'http://localhost:8080/myzone/member/editMember?NameID=admin&MobileID=18779885546&EmailID=aaa%40jxau.com&QQID=1111111111&AddressID=beijing&HeadPicID=', '0');
-INSERT INTO `log` VALUES ('38', '2', '0', '4', '0', '/myzone/member/login', '2016-04-19 23:54:01', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=111', '0');
-INSERT INTO `log` VALUES ('39', '2', '0', '4', '0', '/myzone/member/login', '2016-04-20 18:17:29', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=111', '0');
-INSERT INTO `log` VALUES ('40', '2', '0', '4', '0', '/myzone/member/login', '2016-04-20 20:16:32', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=111', '0');
-INSERT INTO `log` VALUES ('41', '2', '0', '4', '0', '/myzone/member/login', '2016-04-20 20:19:58', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=111', '0');
-INSERT INTO `log` VALUES ('42', '2', '0', '4', '0', '/myzone/member/login', '2016-04-20 20:25:05', '用户登录', 'http://localhost:8080/myzone/member/login?account=admin&passwd=111', '0');
-
--- ----------------------------
 -- Table structure for logtype
 -- ----------------------------
 DROP TABLE IF EXISTS `logtype`;
@@ -296,17 +183,6 @@ CREATE TABLE `logtype` (
   `TypeDesc` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='日志类型';
-
--- ----------------------------
--- Records of logtype
--- ----------------------------
-INSERT INTO `logtype` VALUES ('1', '用户注册', '用户日志');
-INSERT INTO `logtype` VALUES ('2', '用户登录', '用户日志');
-INSERT INTO `logtype` VALUES ('3', '新增联系人', '联系人日志');
-INSERT INTO `logtype` VALUES ('4', '修改联系人', '联系人日志');
-INSERT INTO `logtype` VALUES ('5', '删除联系人', '联系人日志');
-INSERT INTO `logtype` VALUES ('6', '修改用户信息', '用户日志');
-INSERT INTO `logtype` VALUES ('7', '修改用户密码', '用户日志');
 
 -- ----------------------------
 -- Table structure for mail
@@ -331,13 +207,6 @@ CREATE TABLE `mail` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='邮件内容表';
 
 -- ----------------------------
--- Records of mail
--- ----------------------------
-INSERT INTO `mail` VALUES ('1', 'aaaa', 'aaaaa', null, null, '2016-04-18 23:41:50', '2016-04-18 23:41:52', '0', null, '0', '0', '0', '0');
-INSERT INTO `mail` VALUES ('5', 'ccc', 'ddd', null, null, '2016-04-20 20:34:55', null, '0', null, '0', '0', '0', '0');
-INSERT INTO `mail` VALUES ('6', 'www', 'wwwwwwwww', null, null, '2016-04-20 20:41:00', null, '0', null, '0', '0', '0', '0');
-
--- ----------------------------
 -- Table structure for mailinbox
 -- ----------------------------
 DROP TABLE IF EXISTS `mailinbox`;
@@ -360,14 +229,6 @@ CREATE TABLE `mailinbox` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ID_UNIQUE` (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='收件箱';
-
--- ----------------------------
--- Records of mailinbox
--- ----------------------------
-INSERT INTO `mailinbox` VALUES ('1', '2', '1', '1', '2016-04-18 23:42:13', '1', '0', null, '0', null, '0', '0', null, '0', '0');
-INSERT INTO `mailinbox` VALUES ('2', '4', '1', '1', '2016-04-20 19:49:32', '1', '0', null, '0', null, '0', '0', null, '0', '0');
-INSERT INTO `mailinbox` VALUES ('3', '5', null, '6', '2016-04-20 20:41:00', null, '0', null, '0', null, '0', '0', null, '0', '0');
-INSERT INTO `mailinbox` VALUES ('4', '5', null, '6', '2016-04-20 20:41:00', null, '0', null, '0', null, '0', '0', null, '0', '0');
 
 -- ----------------------------
 -- Table structure for mailoutbox
@@ -396,27 +257,20 @@ CREATE TABLE `mailoutbox` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='发件箱';
 
 -- ----------------------------
--- Records of mailoutbox
--- ----------------------------
-INSERT INTO `mailoutbox` VALUES ('1', '1', '2,4', null, null, '1', '2016-04-18 23:43:18', '2016-04-18 23:43:20', '1', '2016-04-18 23:43:28', '1', '0', null, '0', '0', '0', '0');
-INSERT INTO `mailoutbox` VALUES ('2', '4', '1', '2', null, '5', null, null, '0', null, null, '0', null, '1', '0', '0', '0');
-INSERT INTO `mailoutbox` VALUES ('3', '4', '5', '6', null, '6', null, null, '0', null, null, '0', null, '0', '0', '0', '0');
-
--- ----------------------------
 -- Table structure for member
 -- ----------------------------
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户表',
-  `Name` varchar(60) DEFAULT NULL COMMENT '用户名',
-  `NickName` varchar(60) DEFAULT NULL COMMENT '用户名',
+  `ID` varchar(18) NOT NULL COMMENT '用户表',
+  `Name` varchar(18) DEFAULT NULL COMMENT '用户名',
+  `NickName` varchar(18) DEFAULT NULL COMMENT '用户名',
   `Gender` tinyint(1) DEFAULT '0' COMMENT '性别（1男，0女）',
   `Birthday` datetime DEFAULT NULL COMMENT '生日',
   `HeadPic` varchar(100) DEFAULT NULL COMMENT '头像',
   `SpacePic` varchar(100) DEFAULT NULL COMMENT '空间头图',
-  `Passwd` varchar(64) DEFAULT NULL COMMENT '密码',
-  `Mobile` varchar(20) DEFAULT NULL COMMENT '手机号',
-  `Email` varchar(100) DEFAULT NULL COMMENT '电子邮件',
+  `Passwd` varchar(32) DEFAULT NULL COMMENT '密码',
+  `Mobile` varchar(11) DEFAULT NULL COMMENT '手机号',
+  `Email` varchar(32) DEFAULT NULL COMMENT '电子邮件',
   `QQ` varchar(18) DEFAULT NULL,
   `CreateTime` datetime DEFAULT NULL COMMENT '注册时间',
   `Address` varchar(100) DEFAULT NULL COMMENT '地址',
@@ -426,22 +280,10 @@ CREATE TABLE `member` (
   `IsLock` tinyint(1) DEFAULT '0' COMMENT '用户是否锁定，锁定后就不能登录,1是0否',
   `IsLogin` tinyint(1) DEFAULT '0' COMMENT '是否登录，1 login, 0 logout',
   `LockTime` datetime DEFAULT NULL COMMENT '账户锁住时间',
-  `EncryptedID` varchar(100) DEFAULT NULL COMMENT '加密的用户ID',
+  `EncryptedID` varchar(32) DEFAULT NULL COMMENT '加密的用户ID',
   PRIMARY KEY (`ID`),
-  UNIQUE KEY `ID_UNIQUE` (`ID`),
-  KEY `mobile` (`Mobile`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='用户表';
-
--- ----------------------------
--- Records of member
--- ----------------------------
-INSERT INTO `member` VALUES ('1', 'admin1', null, '0', null, null, null, '123456', '18779885539', 'Jade@jxau.com', null, null, null, null, '0', null, '0', '0', null, null);
-INSERT INTO `member` VALUES ('2', 'admin2', null, '0', null, null, null, '123', null, null, null, null, null, null, '0', null, '0', '0', null, null);
-INSERT INTO `member` VALUES ('3', 'admin3', null, '0', null, null, null, '123', null, null, null, null, null, null, '0', null, '0', '0', null, null);
-INSERT INTO `member` VALUES ('4', 'admin', null, '0', null, null, null, '111', '18779885546', 'aaa@jxau.com', '1111111111', null, 'beijing', null, '0', null, '0', '1', null, null);
-INSERT INTO `member` VALUES ('5', 'abc', null, '0', null, null, null, '111', null, null, null, null, null, null, '0', null, '0', '1', null, null);
-INSERT INTO `member` VALUES ('6', 'abc1', null, '0', null, null, null, '123', null, null, null, null, null, null, '0', null, '0', '1', null, null);
-INSERT INTO `member` VALUES ('7', 'abc2', null, '0', null, null, null, '123', null, null, null, null, null, null, '0', null, '0', '1', null, null);
+  UNIQUE KEY `ID_UNIQUE` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Table structure for message
@@ -479,10 +321,6 @@ CREATE TABLE `message` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户消息表';
 
 -- ----------------------------
--- Records of message
--- ----------------------------
-
--- ----------------------------
 -- Table structure for right
 -- ----------------------------
 DROP TABLE IF EXISTS `right`;
@@ -497,10 +335,6 @@ CREATE TABLE `right` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ID_UNIQUE` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单导航';
-
--- ----------------------------
--- Records of right
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for template
@@ -522,10 +356,6 @@ CREATE TABLE `template` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件模板表';
 
 -- ----------------------------
--- Records of template
--- ----------------------------
-
--- ----------------------------
 -- Table structure for templatetype
 -- ----------------------------
 DROP TABLE IF EXISTS `templatetype`;
@@ -536,10 +366,6 @@ CREATE TABLE `templatetype` (
   `Status` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='模板类型表';
-
--- ----------------------------
--- Records of templatetype
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -555,12 +381,6 @@ CREATE TABLE `t_permission` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_permission
--- ----------------------------
-INSERT INTO `t_permission` VALUES ('1', 'user:*', '1');
-INSERT INTO `t_permission` VALUES ('2', 'student:*', '2');
-
--- ----------------------------
 -- Table structure for t_role
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role`;
@@ -569,12 +389,6 @@ CREATE TABLE `t_role` (
   `roleName` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_role
--- ----------------------------
-INSERT INTO `t_role` VALUES ('1', 'admin');
-INSERT INTO `t_role` VALUES ('2', 'teacher');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -591,25 +405,12 @@ CREATE TABLE `t_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_user
--- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'crossoverJie', '123456', '1');
-INSERT INTO `t_user` VALUES ('2', 'aaa', '12345', '2');
-INSERT INTO `t_user` VALUES ('3', 'bbb', '12345', null);
-INSERT INTO `t_user` VALUES ('4', 'ccc', '12345', null);
-
--- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(32) NOT NULL,
   `name` varchar(18) DEFAULT NULL,
   `pswd` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of user
--- ----------------------------
-INSERT INTO `user` VALUES ('1', 'jade', '123');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -60,7 +60,8 @@
 			</list>
 		</property>
 	</bean>
-	<!-- 采用SpringMVC自带的JSON转换工具，支持@ResponseBody注解 -->
+	<!-- 采用SpringMVC自带的JSON转换工具，支持@ResponseBody注解，保证interceptor中通过handler获得请求的method对象 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
 			<list>
@@ -93,6 +94,12 @@
 		<property name="maxInMemorySize" value="40960" />
 	</bean>
 	
+	<!-- 国际化配置 -->  
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
+		<property name="cookieName" value="clientlanguage"/>
+		<property name="cookieMaxAge" value="94608000"/>
+	</bean>
+	
 	<!-- 异常处理器 -->
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
     	<property name="exceptionMappings">  
@@ -103,12 +110,16 @@
     	</property>  
     </bean>
 	
-     
-    <!-- 设置,可用链接访问项目目录下的更新配置文件 -->
+    <!-- 配置静态资源，直接映射到对应的文件夹，不被DispatcherServlet处理，可用链接访问项目目录下的更新配置文件 -->
+    <mvc:resources mapping="/common/img/**" location="/img/" />
+	<mvc:resources mapping="/common/js/**" location="/js/"/>
+	<mvc:resources mapping="/common/css/**" location="/css/"/>
     <!-- 
-    <mvc:resources mapping="/*.txt" location="/" cache-period="31556926" />
     <mvc:resources mapping="/*.apk" location="/" cache-period="31556926" />
      -->
+     
+    <!-- 容器默认DefaultServletHandler处理所有静态内容与无RequestMapping处理的URL -->
+    <mvc:default-servlet-handler/>
 
     <!-- 配置拦截器 -->
     <!--

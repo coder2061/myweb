@@ -26,7 +26,7 @@ public class RedisController {
 		//key采取StringRedisSerializer,value采取JdkSerializationRedisSerializer  
         ValueOperations<String, Object> valueOper = redisTemplate.opsForValue();
         User user = new User();
-        user.setId(1);
+        user.setId("1");
         user.setName("jade");
         user.setPswd("1234");
         valueOper.set("user", user);  
@@ -37,7 +37,7 @@ public class RedisController {
 	@RequestMapping("get")
 	public String get() {
 		User user = new User();
-        user.setId(1);
+        user.setId("1");
         user.setName("jade");
         user.setPswd("1234");
         System.out.println(userCache.add(user));
@@ -49,7 +49,7 @@ public class RedisController {
 	@RequestMapping("getUser")
 	public String getUser() {
 		User user = new User();
-        user.setId(1);
+        user.setId("1");
         user.setName("jade");
         user.setPswd("1234");
         

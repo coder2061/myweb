@@ -121,7 +121,7 @@ public class UserCacheImpl extends RedisCache<String, User> implements
 				}
 				String name = serializer.deserialize(value);
 
-				return new User(Integer.parseInt(keyId), name, null);
+				return new User(keyId, name, null);
 			}
 		});
 		return result;
