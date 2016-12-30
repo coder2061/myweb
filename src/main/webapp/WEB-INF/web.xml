@@ -39,7 +39,8 @@
 			classpath:tools/spring-cxf.xml,
 			classpath:tools/spring-activemq.xml,
 			classpath:tools/spring-memcached.xml,
-			classpath:tools/spring-whalin.xml
+			classpath:tools/spring-whalin.xml,
+			classpath:tools/spring-mongodb.xml,
 			<!-- 
 			classpath:tools/spring-shiro.xml,
 	         -->
