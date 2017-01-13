@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     
+				        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+				        http://www.springframework.org/schema/context 
+				        http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+				        http://www.springframework.org/schema/mvc  
+				        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<description>redis主从配置</description>
+
+	<!-- 引入properties配置文件 -->
+	<!-- 直接使用redisx线程池 -->
+	<!-- 
+	<context:property-placeholder location="classpath:config/redisx_master_slave.properties"
+		ignore-unresolvable="true" />
+	<bean id="redisXMsterSlave" class="cn.skynethome.redisx.spring.RedisXMasterSlave">
+		<property name="configFlag" value="false"></property> 
+		<property name="master" value="127.0.0.1:6379"></property>
+		<property name="slave" value="127.0.0.1:6380"></property>
+		<property name="auth" value=""></property>
+		<property name="testOnBorrow" value="true"></property>
+		<property name="max_active" value="300"></property>
+		<property name="max_idle" value="10"></property>
+		<property name="max_wait" value="3000"></property>
+		<property name="timeout" value="10000"></property>
+	</bean>
+     -->
+    
+    <!-- 指定配置文件配置redisx线程池 -->
+	<bean id="redisXMsterSlave" class="cn.skynethome.redisx.spring.RedisXMasterSlave">
+		<property name="configFlag" value="true"></property>
+		<property name="configPath" value="classpath:config/redisx_master_slave.properties"></property>
+	</bean>
+
+</beans>

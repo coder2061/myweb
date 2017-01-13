@@ -42,6 +42,7 @@
 			classpath:tools/spring-whalin.xml,
 			classpath:tools/spring-mongodb.xml
 			<!-- 
+			classpath:tools/spring-redisx.xml,
 			classpath:tools/spring-shiro.xml,
 	         -->
         </param-value>

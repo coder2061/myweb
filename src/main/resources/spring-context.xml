@@ -23,9 +23,10 @@
 	   	http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
     
 	<!-- 隐式地向 Spring容器注册 -->
+	<!-- 
 	<context:annotation-config/>
-    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>  
-    
+     -->
+     
     <!-- 统一异常处理方式 -->
     <!-- 
 	<bean id="exceptionHandler" class="com.web.myapp.core.exception.MyExceptionHandler"/>
